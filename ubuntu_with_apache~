@@ -1,0 +1,61 @@
+#Get a container
+sudo docker run -t -i ubuntu /bin/bash
+
+#install wget you need it
+apt-get update
+apt-get -f install
+apt-get install wget
+
+#Get the tomcat tar file
+#if following mirror doesn't work check the page version might have changed
+wget mirror.atlanticmetro.net/apache/tomcat/tomcat-7/v7.0.54/bin/apache-tomcat-7.0.54.tar.gz
+
+#Extract it
+tar xvzf apache-tomcat-7.0.54.tar.gz
+
+#move to the location you want
+# I move to root directory      mv apache-tomcat-7.0.54/   /tomcat7
+mv apache-tomcat-7.0.54/  <any_directory>/tomcat7
+
+#remove tar.gz
+rm apache-tomcat-7.0.54.tar.gz
+
+#Lets install java now, will come back to tomcat again
+sudo apt-get install default-jdk
+
+#update the path of java home in bashrc
+sudo vi ~/.bashrc
+export JAVA_HOME=/usr/lib/jvm/default-java
+export CATALINA_HOME=~/path/to/tomcat  
+
+#Save the bashrc  and restart it, there is . in the front
+. ~/.bashrc
+
+# Update the path of java in tomcat as well
+sudo gedit <path to tomcat>/tomcat7/bin/catalina.sh
+
+#add the following lines at the end, version might be different so use your not mine :)
+JAVA_HOME="/usr/lib/jvm/default-java"
+JRE_HOME="/usr/lib/jvm/default-java/jre"
+
+#now lets start the tomcat
+$CATALINA_HOME/bin/startup.sh
+
+if it runs you are good to go, sometime it might says "touch, can't touch .../logs/catalina.out
+This might be the problem related to permission so go ahead create a directory called logs under tomcat7 and create a file catalina.out
+
+
+using other terminal find the ip address (docker inspect container_id) of your container  and enter following line in your browser
+<ip address of container>:8080
+
+it should so show.
+It works !
+
+
+
+
+If you want the ubuntu14.04 with tomcat. You can use my image which I have hosted on docker-hub
+
+search for "rgaut/ubuntuwith_tomcat7"
+
+
