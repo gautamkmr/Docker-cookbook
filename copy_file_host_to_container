@@ -1,0 +1,2 @@
+
+docker run -t -i ubuntu /bin/bash -c 'cat > host_file_name' < container_file_name
