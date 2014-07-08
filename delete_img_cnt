@@ -1,0 +1,9 @@
+
+//To stop all docker container
+ docker stop $(docker ps -a -q)
+
+//To remove all docker container
+docker rm $(docker ps -a -q)
+
+//To remove all docker images 
+docker rmi $(docker images -a -q)
