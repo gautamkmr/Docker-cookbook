@@ -1,0 +1,20 @@
+#there are two ways to save docker images which can be migrated to another machine
+
+1.  
+
+ docker save -o <save image to path> <image name>
+
+ #Then copy your image to a new system with regular file transfer tools such as cp or scp. 
+ #After that you will have to load the image into docker:
+ 
+ docker load -i <path to image tar file>
+
+ #now you are in the same image :)
+
+2.
+
+ # For a flattened export of a container's filesystem, use;
+
+ docker export CONTAINER_ID > my_container.tar
+
+ Use docker import my_container.tar to import said image.
