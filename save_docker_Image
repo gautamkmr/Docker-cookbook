@@ -2,19 +2,34 @@
 
 1.  
 
- docker save -o <save image to path> <image name>
+# Save is used to persist an image (not a container). So we need the image name
+ sudo docker save <image_name> > /home/save.tar
 
- #Then copy your image to a new system with regular file transfer tools such as cp or scp. 
- #After that you will have to load the image into docker:
+
+# import the exported tar ball:
+docker load < /home/save.tar
  
- docker load -i <path to image tar file>
+# check the available images
+sudo docker images
+ 
+# and check if a new container made from this image
+# contains our folder (it does!)
+sudo docker run -t -i  <image_name>  /bin/bash
 
- #now you are in the same image :)
 
 2.
 
- # For a flattened export of a container's filesystem, use;
+Export
 
- docker export CONTAINER_ID > my_container.tar
+#Export is used to persist a container (not an image). So we need the container id.
+ sudo docker export <CONTAINER ID> > /home/export.tar
+.
 
- Use docker import my_container.tar to import said image.
+# import the exported tar ball:
+cat /home/export.tar | sudo docker import - alpha-export:latest
+ 
+# check the available images
+sudo docker images
+ 
+# and check 
+sudo docker run -t -i alpha-export  /bin/bash 
